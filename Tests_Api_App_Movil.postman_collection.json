@@ -1,0 +1,341 @@
+{
+	"info": {
+		"_postman_id": "5cbdf370-2879-46b7-98c6-90ecd325ddfd",
+		"name": "Tests_Api_App_Movil",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19912098"
+	},
+	"item": [
+		{
+			"name": "AuthApiUsuarioMovil",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json()\r",
+							"\r",
+							"//Respuesta 200\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"////Especificacion JSON segun el estandar HL7////\r",
+							"\r",
+							"//cod_persona entero\r",
+							"pm.test(\"Cod_persona es un entero\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var cod_persona = jsonData.cod_persona;\r",
+							"    pm.expect(isNaN(cod_persona)).to.be.false;\r",
+							"});\r",
+							"\r",
+							"//cedula string de 10 caracteres?\r",
+							"pm.test(\"Cedula es un string de 10 caracteres\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var cedula = jsonData.cedula;\r",
+							"    pm.expect(typeof cedula).to.eql(\"string\");\r",
+							"    pm.expect(cedula.length).to.eql(10);\r",
+							"});\r",
+							"\r",
+							"//nombres es un string\r",
+							"pm.test(\"nombres es un string\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var nombres = jsonData.nombres;\r",
+							"    pm.expect(typeof nombres).to.eql(\"string\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"nombres es un string\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var nombres = jsonData.nombres;\r",
+							"    pm.expect(typeof nombres).to.eql(\"string\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Sexo es un char\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var sexo = jsonData.sexo;\r",
+							"    pm.expect(typeof sexo).to.eql(\"string\");\r",
+							"    pm.expect(sexo.length).to.eql(1);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Email es una dirección válida\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var email = jsonData.usuario.email;\r",
+							"    var emailRegex = /^(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$/;\r",
+							"    pm.expect(emailRegex.test(email)).to.be.true;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Fecha de ultimo acceso en formato ISO 8601\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var fecha_ultimo_acceso = jsonData.usuario.fecha_ultimo_acceso;\r",
+							"    //console.log(fecha_ultimo_acceso);\r",
+							"    var iso8601Regex = /^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})$/;\r",
+							"    pm.expect(iso8601Regex.test(fecha_ultimo_acceso)).to.be.true;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verificar que ningun dato del response body sea nulo\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var values = Object.values(jsonData);\r",
+							"    for (let value of values) {\r",
+							"        pm.expect(value).to.not.be.null;\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cedula\": \"1719624999\",\r\n    \"password\": \"martina123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.100.20:4000/personas/usuarios/mobile",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"20"
+					],
+					"port": "4000",
+					"path": [
+						"personas",
+						"usuarios",
+						"mobile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MedicineApi",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verificar que ningun dato del response body sea nulo\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var values = Object.values(jsonData);\r",
+							"    for (let value of values) {\r",
+							"        pm.expect(value).to.not.be.null;\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Cod_cosulta es un entero\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var cod_consulta = jsonData.cod_consulta;\r",
+							"    pm.expect(isNaN(cod_consulta)).to.be.false;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Cod_receta es un entero\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var cod_receta = jsonData.receta_medica.cod_receta;\r",
+							"    pm.expect(isNaN(cod_receta)).to.be.false;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verificar que los cod_receta_medica son enteros\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var receta_medicamentos = jsonData.receta_medica.receta_medicamentos;\r",
+							"    for (let medicamento of receta_medicamentos) {\r",
+							"        var cod_receta_medica = medicamento.cod_receta_medica;\r",
+							"        pm.expect(isNaN(cod_receta_medica)).to.be.false;\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verificar que los cod_medicamento son enteros\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var receta_medicamentos = jsonData.receta_medica.receta_medicamentos;\r",
+							"    for (let medicamento of receta_medicamentos) {\r",
+							"        var cod_receta_medica = medicamento.cod_medicamento;\r",
+							"        pm.expect(isNaN(cod_receta_medica)).to.be.false;\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verificar que los cod_receta son enteros\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var receta_medicamentos = jsonData.receta_medica.receta_medicamentos;\r",
+							"    for (let medicamento of receta_medicamentos) {\r",
+							"        var cod_receta_medica = medicamento.cod_receta;\r",
+							"        pm.expect(isNaN(cod_receta_medica)).to.be.false;\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verificar que los dias son enteros\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var receta_medicamentos = jsonData.receta_medica.receta_medicamentos;\r",
+							"    for (let medicamento of receta_medicamentos) {\r",
+							"        var dias = medicamento.dias;\r",
+							"        pm.expect(Number.isInteger(dias)).to.be.true;\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verificar que la frecuencia son enteros\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var receta_medicamentos = jsonData.receta_medica.receta_medicamentos;\r",
+							"    for (let medicamento of receta_medicamentos) {\r",
+							"        var frecuencia = medicamento.frecuencia;\r",
+							"        pm.expect(Number.isInteger(frecuencia)).to.be.true;\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verificar que la dosis es un string\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var receta_medicamentos = jsonData.receta_medica.receta_medicamentos;\r",
+							"    for (let medicamento of receta_medicamentos) {\r",
+							"        var dosis = medicamento.dosis;\r",
+							"         pm.expect(typeof dosis).to.eql(\"string\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verificar que la cantidad_tomas son enteros\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var receta_medicamentos = jsonData.receta_medica.receta_medicamentos;\r",
+							"    for (let medicamento of receta_medicamentos) {\r",
+							"        var cantidad_tomas = medicamento.cantidad_tomas;\r",
+							"        pm.expect(Number.isInteger(cantidad_tomas)).to.be.true;\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verificar que estado es booleano\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var receta_medicamentos = jsonData.receta_medica.receta_medicamentos;\r",
+							"    for (let medicamento of receta_medicamentos) {\r",
+							"        var estado = medicamento.estado;\r",
+							"        pm.expect(typeof estado === 'boolean').to.be.true;\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verificar que createdAt esta en formato ISO 8601\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var receta_medicamentos = jsonData.receta_medica.receta_medicamentos;\r",
+							"    for (let medicamento of receta_medicamentos) {\r",
+							"        var createdAt = medicamento.createdAt;\r",
+							"        var iso8601Regex = /^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})$/;\r",
+							"        pm.expect(iso8601Regex.test(createdAt)).to.be.true;\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verificar que nombre del medicamento es string\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var receta_medicamentos = jsonData.receta_medica.receta_medicamentos;\r",
+							"    for (let medicamento of receta_medicamentos) {\r",
+							"        var nombre = medicamento.medicamento.nombre;\r",
+							"        pm.expect(typeof nombre === 'string').to.be.true;\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"\r",
+							"/*pm.test(\"cod_receta es un \", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var cod_receta = jsonData.receta_medica.cod_receta;\r",
+							"    pm.expect(typeof cod_receta).to.eql(\"string\");\r",
+							"});*/"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cod_persona\":\"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.100.20:4000/persona/paciente/medicamentos",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"20"
+					],
+					"port": "4000",
+					"path": [
+						"persona",
+						"paciente",
+						"medicamentos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DietaApi",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verificar que ningun dato del response body sea nulo\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var values = Object.values(jsonData);\r",
+							"    for (let value of values) {\r",
+							"        pm.expect(value).to.not.be.null;\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cod_persona\": \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.100.20:4000/persona/paciente/dietas",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"100",
+						"20"
+					],
+					"port": "4000",
+					"path": [
+						"persona",
+						"paciente",
+						"dietas"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
